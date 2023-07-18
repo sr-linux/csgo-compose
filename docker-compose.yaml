@@ -1,0 +1,37 @@
+version: '3'
+services:
+  csgo-dedicated:
+    image: cm2network/csgo
+    restart: always
+    environment:
+      # - SRCDS_TOKEN=C455E6863493ADA684827084A2783317
+      # - SRCDS_RCONPW=123456
+      # - SRCDS_PW=changeme
+      # - SRCDS_PORT=27015
+      # - SRCDS_TV_PORT=27020
+      # # - SRCDS_NET_PUBLIC_ADDRESS=0
+      # # - SRCDS_IP=0
+      # # - SRCDS_LAN=0
+      # - SRCDS_FPSMAX=300
+      - SRCDS_TICKRATE=64
+      # - SRCDS_MAXPLAYERS=40
+      # - SRCDS_STARTMAP=de_dust2
+      # - SRCDS_REGION=3
+      # - SRCDS_MAPGROUP=mg_active
+      # - SRCDS_GAMETYPE=0
+      # - SRCDS_GAMEMODE=1
+      # - SRCDS_HOSTNAME=New CSGO Server
+      # - SRCDS_WORKSHOP_START_MAP=0
+      # - SRCDS_HOST_WORKSHOP_COLLECTION=0
+      # - SRCDS_WORKSHOP_AUTHKEY=""
+      - ADDITIONAL_ARGS=""
+    ports: 
+      - 27016:27015/udp
+    volumes:
+      - ./csgo-data:/home/steam/csgo-dedicated
+      - ./server.cfg:/home/steam/csgo-dedicated/csgo/cfg/server.cfg
+    networks:
+      - host-network
+
+networks:
+  host-network:
