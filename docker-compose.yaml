@@ -3,34 +3,40 @@ services:
   csgo-dedicated:
     image: cm2network/csgo:sourcemod
     restart: always
+    deploy:
+      resources:
+        reservations:
+          cpus: '0-1'  #definir quantos núcleos de cpu (nesse caso 2)
     environment:
-      - SRCDS_TOKEN=A9167DC965E02764EEBAE2E9FBD95363
-      - SRCDS_RCONPW=mega123
-      - SRCDS_PW=mega123
+      - SRCDS_TOKEN=${SRCDS_TOKEN}
+      - SRCDS_RCONPW=${SRCDS_RCONPW}
+      - SRCDS_PW=${SRCDS_PW}
       - SRCDS_PORT=27015
       - SRCDS_TV_PORT=27020
-      - SRCDS_NET_PUBLIC_ADDRESS=129.148.59.121
+      - SRCDS_NET_PUBLIC_ADDRESS=0
       - SRCDS_IP=0
       - SRCDS_LAN=0
-      - SRCDS_FPSMAX=300
+      - SRCDS_FPSMAX=400
       - SRCDS_TICKRATE=128
-      - SRCDS_MAXPLAYERS=40
+      - SRCDS_MAXPLAYERS=16
       - SRCDS_STARTMAP=de_dust2
       - SRCDS_REGION=2
       - SRCDS_MAPGROUP=mg_active
-      - SRCDS_GAMETYPE=1
+      - SRCDS_GAMETYPE=0
       - SRCDS_GAMEMODE=1
       - SRCDS_HOSTNAME="CSGO Server Brabo"
       - SRCDS_WORKSHOP_START_MAP=0
       - SRCDS_HOST_WORKSHOP_COLLECTION=0
-      - SRCDS_WORKSHOP_AUTHKEY="0FA71F3379E076B36A53F2C7814B01EC"
+      - SRCDS_WORKSHOP_AUTHKEY=${SRCDS_WORKSHOP_AUTHKEY}
       - SOURCEMOD_PLUGINS_ENABLED="mapchooser,randomcycle,rockthevote"
-      #- ADDITIONAL_ARGS=""
 
     ports: 
       - 27015:27015/udp
     volumes:
       - csgo-data:/home/steam/csgo-dedicated/:rw
+      - ./csgo-config/server.cfg:/home/steam/csgo-dedicated/csgo/cfg/server.cfg
+      - ./csgo-config/admins_simple.ini:/home/steam/csgo-dedicated/csgo/addons/sourcemod/configs/admins_simple.ini
+
 
 volumes:
   csgo-data:
